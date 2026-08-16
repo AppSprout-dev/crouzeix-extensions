@@ -57,3 +57,12 @@ Any partial result (cb constant for a concrete class, or a joint bound under a c
 - Open theorem `cb_for_perturbed_nilpotent` for `S_n + εE`.
 - Large cb campaign: max random `k≥8`, `deg≥3` ratio 1.1017; none above 2.
 - First static CEM snapshots accepted: Torquon-GB@`2be4790` (4 stiffness) and Hygra@`9e71ce9` (4 Jacobians). No writes into those repos.
+
+### 2026-08-16 (COR route)
+- Complete constant 2 stays open. No `(A, F)` with shipped ratio `> 2+1e-3`
+  is a legitimate refutation gate (Johnson can inflate ratios).
+- Regression gates: exact-2 on `S₂` + `z I_k`; ≤2 on `S_n` (disk) and
+  Choi `M(2sin φ, 2cos φ, 0)` (Crouzeix–Greenbaum, complete 2-spectral).
+- Lean milestone: `COR.cor_quartic_bound` (`κ ≤ 1+√2` from the COR quartic).
+  Next complete step is constructing Φ and α; then COR 1.1(ii) for constant 2.
+- LS Lemma 1 fails after amplification (non-commuting `α(Fⁿ)F` vs `F α(Fⁿ)`).

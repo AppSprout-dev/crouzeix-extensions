@@ -26,6 +26,12 @@ Advance the completely-bounded analogue of Crouzeix’s theorem (constant 2) and
   Large cb (`k≥8`, `deg≥3`): max random ratio 1.1017.
   First static snapshots: `data/imported/torquon-gb/` and `data/imported/hygra/`.
   See `docs/notes/2026-08-16-first-session.md`.
+- COR route (2026-08-16): no >2 refutation gate (complete constant 2 is
+  open). Harness gates: exact-2 on `S₂` + `z I_k`; ≤2 on disk nilpotents
+  and Choi cyclic shifts (`ensembles.choi_disk_example`). Lean:
+  `COR.cor_quartic_bound` (sorry-free 1+√2 algebra). Constant 2 remains
+  `COR.cor_conjecture_cb_two`. LS Lemma 1 does not lift; see
+  `docs/open-problems.md`.
 
 ## Preferred workflow
 1. Numerical scouting on synthetic + imported matrices.

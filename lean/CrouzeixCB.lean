@@ -4,6 +4,7 @@
   Companion files:
   * `NilpotentShift.lean` — 2×2 nilpotent sharpness (scalar ratio of z is 2).
   * `NilpotentShift3.lean` — `W(S₃) =` closed disk of radius `cos(π/4)`.
+  * `CrouzeixCOR.lean` — COR 1+√2 quartic (sorry-free) and open cb=2 target.
 -/
 
 import Mathlib

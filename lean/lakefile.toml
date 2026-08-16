@@ -15,3 +15,6 @@ name = "NilpotentShift3"
 
 [[lean_lib]]
 name = "CrouzeixCB"
+
+[[lean_lib]]
+name = "CrouzeixCOR"

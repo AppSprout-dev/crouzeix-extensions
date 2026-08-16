@@ -47,6 +47,42 @@ def nilpotent_shift(n: int) -> Array:
     return S
 
 
+def choi_cyclic_shift(alphas) -> Array:
+    """Choi cyclic weighted shift ``M(α) = P_d diag(α)``.
+
+    ``P_d`` is the cycle ``e₁ → e₂ → ⋯ → e_d → e₁``. Crouzeix–Greenbaum
+    (arXiv:2508.12768) prove that this family is a *complete* 2-spectral
+    set: ``ψ_cb(M) = ψ(M) ≤ 2``. Not to be confused with a general
+    (non-cyclic) weighted shift, whose numerical range need not be a
+    disk and whose cb statement is still open.
+    """
+    a = np.asarray(alphas, dtype=complex).reshape(-1)
+    d = int(a.size)
+    P = np.zeros((d, d), dtype=complex)
+    if d == 0:
+        return P
+    if d >= 2:
+        P[np.arange(d - 1), np.arange(1, d)] = 1.0
+    P[d - 1, 0] = 1.0
+    return P @ np.diag(a)
+
+
+def choi_disk_example(phi: float) -> Array:
+    """``M(2 sin φ, 2 cos φ, 0)``.
+
+    ``W(M)`` is the closed unit disk and
+    ``ψ(M) = 2 max(sin φ, cos φ, sin 2φ) ∈ [√3, 2]``
+    (Crouzeix–Greenbaum, Remark 2). Equality to 2 only at
+    ``φ ∈ {0, π/4, π/2}``.
+    """
+    return choi_cyclic_shift([2.0 * np.sin(phi), 2.0 * np.cos(phi), 0.0])
+
+
+def choi_disk_theory_psi(phi: float) -> float:
+    """Exact ``ψ`` for :func:`choi_disk_example` (unit-disk numerical range)."""
+    return 2.0 * max(float(np.sin(phi)), float(np.cos(phi)), float(np.sin(2.0 * phi)))
+
+
 def weighted_shift(n: int, weights: Array | None = None, seed: int | None = None) -> Array:
     """Weighted forward shift (transport-like). Default weights are 1, 1/2, …."""
     S = np.zeros((n, n), dtype=complex)

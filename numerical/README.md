@@ -35,4 +35,11 @@ The default (non-`--quick`) run also includes the large cb campaign.
 
 ## Ensembles
 See `ensembles.py`. Every random family takes an explicit seed. Structured
-families (nilpotent / weighted / Grcar) are deterministic.
+families (nilpotent / weighted / Grcar / Choi cyclic) are deterministic.
+
+Regression gates in `test_harness.py` (shipped `cb_crouzeix_ratio`):
+- exact-2: `S₂` with `F(z) = z I_k`;
+- ≤2 (harness bug if violated): unweighted `S_n` (disk) and Choi
+  `M(2sin φ, 2cos φ, 0)` (complete 2-spectral);
+- alert, do not fail: unstructured probes `> 2+1e-3` (Johnson can
+  under-sample `W(A)`). A `>2` alert is not a Crouzeix counterexample.

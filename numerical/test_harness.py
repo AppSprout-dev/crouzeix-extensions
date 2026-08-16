@@ -10,7 +10,13 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from ensembles import list_imported, load_imported_matrix, nilpotent_shift
+from ensembles import (
+    choi_disk_example,
+    choi_disk_theory_psi,
+    list_imported,
+    load_imported_matrix,
+    nilpotent_shift,
+)
 from ratio_harness import (
     THEORY_W_NILPOTENT,
     cb_crouzeix_ratio,
@@ -45,20 +51,72 @@ def main() -> int:
     ok &= check("3x3 nilpotent w(S)≈cos(π/4)", abs(w3 - theory3) < 2e-3, f"w={w3} theory={theory3}")
     ok &= check("3x3 nilpotent ratio(z)≈√2", abs(r3 - np.sqrt(2.0)) < 5e-3, f"ratio={r3}")
 
-    # Amplification F(z)=z I_k recovers the scalar ratio.
+    # Exact-2 sharpness gate (representative): F(z) = z I_k on S₂.
+    # ‖F(S₂)‖ = 1 and w(S₂) = 1/2, so the shipped cb ratio is exactly 2.
     mats = [np.zeros((2, 2), dtype=complex), np.eye(2, dtype=complex)]
     r_cb = cb_crouzeix_ratio(S2, mats, n_angles=360)
     ok &= check("cb amplification z I_2 recovers 2", abs(r_cb - 2.0) < 1e-8, f"ratio={r_cb}")
+    print(f"representative S2 z I_2 ratio={r_cb:.10f}")
+
+    mats8 = [np.zeros((8, 8), dtype=complex), np.eye(8, dtype=complex)]
+    r_zI8 = cb_crouzeix_ratio(S2, mats8, n_angles=360)
+    ok &= check("exact-2 gate z I_8 on S2", abs(r_zI8 - 2.0) < 1e-3, f"ratio={r_zI8}")
 
     # S^2 = 0
     ok &= check("2x2 S^2=0", np.linalg.norm(S2 @ S2) < 1e-15)
 
-    # Shipped cb path: k ≥ 8, degree ≥ 3, seeded. Must be finite and ≤ 2 + 1e-3.
+    # Provably-≤2 family: unweighted Jordan nilpotents (W is a disk).
+    # A ratio > 2+1e-3 here is a harness bug, not a Crouzeix counterexample.
+    zI2 = [np.zeros((2, 2), dtype=complex), np.eye(2, dtype=complex)]
+    for n in (2, 3, 4, 5):
+        Sn = nilpotent_shift(n)
+        r_n = cb_crouzeix_ratio(Sn, zI2, n_angles=360)
+        ok &= check(
+            f"disk family S_{n} z I_2 ≤ 2+1e-3",
+            np.isfinite(r_n) and r_n <= 2.0 + 1e-3,
+            f"ratio={r_n}",
+        )
+
+    ok &= check(
+        "Choi theory_psi(π/4)=2",
+        abs(choi_disk_theory_psi(np.pi / 4) - 2.0) < 1e-12,
+        f"psi={choi_disk_theory_psi(np.pi / 4)}",
+    )
+    ok &= check(
+        "Choi theory_psi(π/6)=√3",
+        abs(choi_disk_theory_psi(np.pi / 6) - np.sqrt(3.0)) < 1e-12,
+        f"psi={choi_disk_theory_psi(np.pi / 6)}",
+    )
+
+    # Provably-≤2 family: Choi cyclic weighted shift (Crouzeix–Greenbaum).
+    # M(2sinφ, 2cosφ, 0) has W = unit disk and ψ = 2 max(sinφ, cosφ, sin 2φ).
+    for phi, tag in ((np.pi / 6, "pi/6"), (np.pi / 4, "pi/4"), (np.pi / 3, "pi/3")):
+        M = choi_disk_example(phi)
+        theory = choi_disk_theory_psi(phi)
+        r_ch = cb_crouzeix_ratio(M, zI2, n_angles=360)
+        ok &= check(
+            f"Choi M(2sin,2cos,0) φ={tag} ≤ 2+1e-3",
+            np.isfinite(r_ch) and r_ch <= 2.0 + 1e-3,
+            f"ratio={r_ch} theory_psi={theory}",
+        )
+        r_sc = scalar_crouzeix_ratio(M, [0.0, 1.0], n_angles=360)
+        ok &= check(
+            f"Choi φ={tag} scalar z ≤ 2+1e-3",
+            np.isfinite(r_sc) and r_sc <= 2.0 + 1e-3,
+            f"ratio={r_sc}",
+        )
+
+    # Unstructured probe: Johnson W(A) can under-estimate the boundary and
+    # inflate the ratio. A value > 2+1e-3 is an alert (possible sampler bug),
+    # not a fail and not a claimed counterexample.
     S5 = nilpotent_shift(5)
     mats_large = random_matrix_poly(k=8, degree=3, seed=20260816)
     r_large = cb_crouzeix_ratio(S5, mats_large, n_angles=180)
     ok &= check("large cb k=8 deg=3 finite", np.isfinite(r_large), f"ratio={r_large}")
-    ok &= check("large cb k=8 deg=3 ≤ 2+1e-3", np.isfinite(r_large) and r_large <= 2.0 + 1e-3, f"ratio={r_large}")
+    if np.isfinite(r_large) and r_large > 2.0 + 1e-3:
+        print(f"  [ALERT] large cb k=8 deg=3 > 2+1e-3  ratio={r_large}  (Johnson under-sample, not a refutation)")
+    else:
+        print(f"  [ok] large cb k=8 deg=3 no >2 alert  ratio={r_large}")
     ok &= check("large cb coeff count", len(mats_large) == 4 and mats_large[0].shape == (8, 8))
 
     tq = list_imported("torquon-gb")

@@ -14,12 +14,16 @@ cd lean
 lake build NilpotentShift
 lake build NilpotentShift3
 lake build CrouzeixCB
+lake build CrouzeixCOR
 ```
 
 ## Current files
 - `CrouzeixCB.lean` — numerical range, closed disk, matrix-valued calculus,
   open cb statements (`sorry`, not `True` stubs). Includes
   `cb_for_perturbed_nilpotent` for `S_n + εE`.
+- `CrouzeixCOR.lean` — COR route: sorry-free quartic `κ⁴ ≤ 2κ³ + κ² ⇒ κ ≤ 1+√2`
+  (complete 1+√2 milestone) and the open constant-2 target
+  `cor_conjecture_cb_two`. Kronecker-calculus lemmas for linear pencils.
 - `NilpotentShift.lean` — 2×2 nilpotent: `S² = 0`, `W(S) ⊆ {|z| ≤ 1/2}`,
   `‖S‖ = 1`, scalar ratio of `p(z) = z` is exactly 2.
 - `NilpotentShift3.lean` — `W(S₃) = disk(0, cos(π/4))`. The inclusion
@@ -34,9 +38,12 @@ Proved (elementary, no dilation theory):
 - `NilpotentShift.scalar_monomial_ratio_eq_two`
 - `NilpotentShift3.numericalRange_subset_closedDisk`
 - `NilpotentShift3.abs_rayleigh_le_cos_pi_div_four`
+- `COR.cor_quartic_bound` — `κ⁴ ≤ 2κ³ + κ² ⇒ κ ≤ 1+√2` (complete 1+√2 algebra)
+- `COR.evalMatrixPoly_linear`, `evalMatrixPoly_const_mul`, `evalMatrixPoly_zIk`
 
 Open / `sorry` (do **not** treat as theorems):
-- `completely_bounded_crouzeix_conjecture`
+- `completely_bounded_crouzeix_conjecture` / `COR.cor_conjecture_cb_two`
+- `COR.complete_crouzeix_palencia` — 1+√2 for the matrix calculus; missing Φ and α
 - `disk_is_complete_two_spectral`
 - `cb_for_nilpotent_shifts` (reduces to the disk theorem)
 - `cb_for_perturbed_nilpotent` — first open non-disk special class
