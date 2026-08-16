@@ -1,0 +1,124 @@
+{
+  "date": "2026-08-16",
+  "note": "Matrices are generated on the fly by numerical/ensembles.py. Binary .npy/.npz are gitignored; this manifest is the source of truth.",
+  "families": {
+    "nilpotent_shift": {
+      "constructor": "ensembles.nilpotent_shift(n)",
+      "seed": null,
+      "n": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "comment": "Jordan block; W = disk of radius cos(\u03c0/(n+1))"
+    },
+    "weighted_shift": {
+      "constructor": "ensembles.weighted_shift(n)",
+      "seed": null,
+      "n": [
+        4,
+        8,
+        12
+      ],
+      "comment": "weights 1, 1/2, \u2026, 1/(n-1)"
+    },
+    "random_triangular": {
+      "constructor": "ensembles.random_triangular(n, seed)",
+      "seeds": [
+        2,
+        3,
+        4,
+        8,
+        16,
+        42,
+        99
+      ],
+      "n": [
+        2,
+        3,
+        4,
+        8,
+        16
+      ]
+    },
+    "ginibre": {
+      "constructor": "ensembles.ginibre(n, seed)",
+      "seeds": [
+        2,
+        7,
+        42
+      ],
+      "n": [
+        2,
+        4,
+        8
+      ]
+    },
+    "mild_nonnormal": {
+      "constructor": "ensembles.mild_nonnormal(n, seed, eps=0.3)",
+      "seeds": [
+        1,
+        2,
+        3
+      ],
+      "n": [
+        4,
+        8,
+        16
+      ]
+    },
+    "perturbed_nilpotent": {
+      "constructor": "ensembles.perturbed_nilpotent(n, seed, eps=0.1)",
+      "seeds": [
+        1,
+        2,
+        3
+      ],
+      "n": [
+        3,
+        5,
+        8
+      ]
+    },
+    "grcar": {
+      "constructor": "ensembles.grcar(n, k=3)",
+      "n": [
+        4,
+        8,
+        16
+      ]
+    },
+    "cem_stiffness": {
+      "constructor": "ensembles.cem_motivated_block(n, seed, kind='stiffness')",
+      "seeds": [
+        11,
+        22
+      ],
+      "n": [
+        6,
+        12
+      ],
+      "comment": "synthetic stand-in; not an imported Torquon-GB snapshot"
+    },
+    "cem_jacobian": {
+      "constructor": "ensembles.cem_motivated_block(n, seed, kind='jacobian')",
+      "seeds": [
+        11,
+        22
+      ],
+      "n": [
+        6,
+        12
+      ],
+      "comment": "synthetic stand-in; not an imported Hygra snapshot"
+    }
+  }
+}
