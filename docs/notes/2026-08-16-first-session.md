@@ -29,13 +29,25 @@
 - Prepared `data/imported/torquon-gb/` and `data/imported/hygra/` with
   READMEs and a snapshot schema. No live CEM pull.
 
+## Follow-up (same day)
+- Mathlib pinned: `lean/lean-toolchain` (`v4.34.0-rc1`) and
+  `lean/lakefile.toml` (mathlib `274ed6d67d9b226c557813b9ce437574cccdce11`).
+- `NilpotentShift3.lean`: `W(S₃) ⊆ disk(0, cos(π/4))` proved; reverse
+  inclusion stated with named `sorry`s (convexity, phase rotation).
+- Open theorem `cb_for_perturbed_nilpotent` for `S_n + εE` (`sorry`, not `True`).
+- Large cb campaign (`--large-cb`): 10 probes with `k ≥ 8`, `degree ≥ 3`,
+  max random ratio 1.1017; only `z I_8` on `S₂` hits 2.0000. Log:
+  `experiments/2026-08-16-cb-large/`. No Torquon-GB / Hygra snapshots arrived.
+
 ## Next concrete actions
-1. Local `lake build` of `NilpotentShift.lean` once a mathlib pin exists.
-2. Formalize `W(S_n) = disk(0, cos(π/(n+1)))` for `n = 3` (still a disk).
-3. Start the perturbed-nilpotent Lean statement (W not a disk).
-4. Larger cb amplifications (`k ≥ 8`, degree ≥ 3) on the same synthetic
-   families; keep looking for ratios that approach 2 from below.
-5. Accept the first static Torquon-GB / Hygra snapshots when exported.
+1. Local `lake build` of `NilpotentShift.lean` (pin is in place; toolchain
+   download may still be running in a fresh environment).
+2. Close the named `sorry`s in the n=3 reverse inclusion (convexity, phases).
+3. Larger / more extremal cb searches (structured F, not only Gaussian coeffs).
+4. Accept the first static Torquon-GB / Hygra snapshots when exported.
+   **Done:** four Torquon stiffness operators and four Hygra Jacobians
+   under `data/imported/`. Scout: `experiments/2026-08-16-imported/`
+   (max ratio 1.0002). CEM repos were not modified.
 
 ## Blockers
 - No Lean/lake toolchain in this environment; lemmas are not machine-checked here.

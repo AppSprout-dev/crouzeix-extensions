@@ -12,3 +12,5 @@ gitignored). Regenerate them from `../data/synthetic/manifest.json` and
 | folder | what |
 |--------|------|
 | `2026-08-16-baseline/` | First scout: Johnson vs legacy Monte-Carlo, nilpotent family, cb probes. |
+| `2026-08-16-cb-large/` | Large cb campaign (`k ≥ 8`, `degree ≥ 3`). Re-run with `python numerical/ratio_harness.py --large-cb`. |
+| `2026-08-16-imported/` | Ratios on the first Torquon-GB / Hygra static snapshots (`--imported`). |

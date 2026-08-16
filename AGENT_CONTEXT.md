@@ -20,9 +20,12 @@ Advance the completely-bounded analogue of Crouzeix’s theorem (constant 2) and
 - Completely-bounded version with constant 2: open.
 - Multi-operator / joint spectral sets: open.
 - 2026-08-16: Johnson harness + first scout (max scalar/cb probe ratio = 2.0000).
-  Lean: `NilpotentShift.scalar_monomial_ratio_eq_two`. Unweighted Jordan
-  nilpotents reduce to the classical disk theorem; next open classes are
-  perturbed nilpotents and weighted shifts. See `docs/notes/2026-08-16-first-session.md`.
+  Lean: `NilpotentShift.scalar_monomial_ratio_eq_two`,
+  `NilpotentShift3.numericalRange_eq_disk` (reverse inclusion has named
+  `sorry`s), open `cb_for_perturbed_nilpotent`. Mathlib pinned in `lean/`.
+  Large cb (`k≥8`, `deg≥3`): max random ratio 1.1017.
+  First static snapshots: `data/imported/torquon-gb/` and `data/imported/hygra/`.
+  See `docs/notes/2026-08-16-first-session.md`.
 
 ## Preferred workflow
 1. Numerical scouting on synthetic + imported matrices.

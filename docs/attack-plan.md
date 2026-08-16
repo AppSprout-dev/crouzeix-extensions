@@ -50,3 +50,10 @@ Any partial result (cb constant for a concrete class, or a joint bound under a c
   genuinely open special classes are **perturbed nilpotents** and
   **weighted shifts**.
 - Imported-data layout ready; no live CEM pull.
+
+### 2026-08-16 (pin / n=3 / large cb)
+- Mathlib pinned in `lean/` (`v4.34.0-rc1`, rev `274ed6d67d9b226c557813b9ce437574cccdce11`).
+- `W(S₃) = disk(0, cos(π/4))` stated with both inclusions; `W ⊆ disk` proved.
+- Open theorem `cb_for_perturbed_nilpotent` for `S_n + εE`.
+- Large cb campaign: max random `k≥8`, `deg≥3` ratio 1.1017; none above 2.
+- First static CEM snapshots accepted: Torquon-GB@`2be4790` (4 stiffness) and Hygra@`9e71ce9` (4 Jacobians). No writes into those repos.

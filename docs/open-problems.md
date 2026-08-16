@@ -26,4 +26,6 @@
   3. general 3×3 nilpotents that are not a single Jordan block.
 - Empirical cb probes on random low-degree amplifications have not yet
   produced a ratio near 2 except for the trivial amplification
-  `F(z) = z I_k` on `S_2`. Larger `k` is the next numerical search.
+  `F(z) = z I_k` on `S_2`. The 2026-08-16 large campaign (`k ∈ {8,12}`,
+  `degree ∈ {3,4}`, 10 random probes) had max ratio 1.1017. Structured
+  near-extremal `F` is the next numerical search.
