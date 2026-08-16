@@ -1,0 +1,17 @@
+name = "crouzeixCB"
+version = "0.1.0"
+defaultTargets = ["NilpotentShift"]
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4"
+rev = "274ed6d67d9b226c557813b9ce437574cccdce11"
+
+[[lean_lib]]
+name = "NilpotentShift"
+
+[[lean_lib]]
+name = "NilpotentShift3"
+
+[[lean_lib]]
+name = "CrouzeixCB"
