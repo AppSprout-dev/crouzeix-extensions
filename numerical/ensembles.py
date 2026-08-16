@@ -6,9 +6,32 @@ families (nilpotent / weighted / Grcar) are deterministic.
 
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
 import numpy as np
 
 Array = np.ndarray
+
+_IMPORTED_ROOT = Path(__file__).resolve().parent.parent / "data" / "imported"
+
+
+def load_imported_matrix(cem: str, filename: str) -> Array:
+    """Load a SCHEMA.md snapshot from data/imported/<cem>/<filename>."""
+    path = _IMPORTED_ROOT / cem / filename
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    real = np.asarray(payload["real"], dtype=float)
+    imag = np.asarray(payload["imag"], dtype=float)
+    if real.shape != imag.shape:
+        raise ValueError(f"{path}: real/imag shape mismatch")
+    return real + 1j * imag
+
+
+def list_imported(cem: str) -> list[str]:
+    man = _IMPORTED_ROOT / cem / "manifest.json"
+    if not man.is_file():
+        return []
+    return list(json.loads(man.read_text(encoding="utf-8")).get("matrices", []))
 
 
 def nilpotent_shift(n: int) -> Array:

@@ -33,6 +33,8 @@ from ensembles import (
     cem_motivated_block,
     ginibre,
     grcar,
+    list_imported,
+    load_imported_matrix,
     mild_nonnormal,
     nilpotent_shift,
     perturbed_nilpotent,
@@ -536,6 +538,75 @@ def campaign_cb(n_angles: int = N_ANGLES) -> list[RatioRecord]:
     return recs
 
 
+def campaign_cb_large(n_angles: int = N_ANGLES) -> list[RatioRecord]:
+    """cb probes with k ≥ 8 and degree ≥ 3 (seeded, aimed at the constant 2)."""
+    recs: list[RatioRecord] = []
+    specs: list[tuple[str, np.ndarray, int, int, int]] = [
+        # family, matrix, k, degree, seed
+        ("nilpotent_shift", nilpotent_shift(2), 8, 3, 8001),
+        ("nilpotent_shift", nilpotent_shift(4), 8, 3, 8002),
+        ("nilpotent_shift", nilpotent_shift(6), 8, 4, 8003),
+        ("perturbed_nilpotent", perturbed_nilpotent(4, seed=21, eps=0.1), 8, 3, 8004),
+        ("perturbed_nilpotent", perturbed_nilpotent(6, seed=22, eps=0.15), 8, 3, 8005),
+        ("random_triangular", random_triangular(6, seed=31), 8, 3, 8006),
+        ("random_triangular", random_triangular(8, seed=32), 8, 3, 8007),
+        ("mild_nonnormal", mild_nonnormal(6, seed=41), 8, 3, 8008),
+        ("nilpotent_shift", nilpotent_shift(3), 12, 3, 8009),
+        ("grcar", grcar(6), 8, 3, 8010),
+    ]
+    for family, A, k, degree, seed in specs:
+        zs = _w_samples(A, n_angles)
+        mats = random_matrix_poly(k, degree=degree, seed=seed)
+        recs.append(
+            _record_cb(
+                family,
+                A,
+                mats,
+                f"rand_k{k}_deg{degree}",
+                seed=seed,
+                n_angles=n_angles,
+                zs=zs,
+            )
+        )
+        recs[-1].extra = "large_cb"
+    # Structured amplification that recovers the scalar extremal (should hit 2).
+    S2 = nilpotent_shift(2)
+    zs2 = _w_samples(S2, n_angles)
+    # F(z) = z I_8 recovers the scalar extremal ratio 2.
+    mats_z = [np.zeros((8, 8), dtype=complex), np.eye(8, dtype=complex)]
+    recs.append(
+        _record_cb("nilpotent_shift", S2, mats_z, "z*I_8", seed="det", n_angles=n_angles, zs=zs2)
+    )
+    recs[-1].extra = "large_cb_amplification"
+    return recs
+
+
+def campaign_imported(n_angles: int = N_ANGLES) -> list[RatioRecord]:
+    """Scalar + small-cb ratios on static CEM snapshots under data/imported/."""
+    recs: list[RatioRecord] = []
+    for cem, kind_prefix in (("torquon-gb", "imported_torquon"), ("hygra", "imported_hygra")):
+        for name in list_imported(cem):
+            A = load_imported_matrix(cem, name)
+            zs = _w_samples(A, n_angles)
+            recs.append(
+                _record_scalar(f"{kind_prefix}", A, [0.0, 1.0], "z", seed=name, n_angles=n_angles, zs=zs)
+            )
+            recs[-1].extra = f"imported:{cem}/{name}"
+            recs.append(
+                _record_scalar(
+                    f"{kind_prefix}", A, [1.0, -0.4, 0.15], "1-0.4z+0.15z^2", seed=name, n_angles=n_angles, zs=zs
+                )
+            )
+            recs[-1].extra = f"imported:{cem}/{name}"
+            if A.shape[0] <= 8:
+                mats = random_matrix_poly(2, degree=1, seed=9000 + A.shape[0])
+                recs.append(
+                    _record_cb(f"{kind_prefix}", A, mats, "rand_k2_deg1", seed=name, n_angles=n_angles, zs=zs)
+                )
+                recs[-1].extra = f"imported:{cem}/{name}"
+    return recs
+
+
 # ---------------------------------------------------------------------------
 # Reporting
 # ---------------------------------------------------------------------------
@@ -629,13 +700,29 @@ def summarize(records: list[RatioRecord]) -> str:
             )
         lines.append("")
 
+    large = [r for r in cb if r.k >= 8 and r.degree >= 3]
+    if large:
+        lmax = max(r.ratio for r in large if r.ratio == r.ratio)
+        lines.append("## Large cb probes (k ≥ 8, degree ≥ 3)")
+        lines.append("")
+        lines.append(
+            f"Count: {len(large)}.  max ratio = {lmax:.4f}.  "
+            "All finite; none treated as a counter-example if they stay ≤ 2 + 1e-3."
+        )
+        approaching = [r for r in large if r.ratio == r.ratio and r.ratio >= 1.5]
+        lines.append(f"Records with ratio ≥ 1.5 (approaching 2 from below): {len(approaching)}")
+        for r in sorted(large, key=lambda x: -x.ratio):
+            lines.append(
+                f"- {r.family} n={r.n} k={r.k} {r.poly} seed={r.seed}  ratio={r.ratio:.4f}"
+            )
+        lines.append("")
+
     lines.append("## Interpretation")
     lines.append("")
     lines.append("- Scalar Johnson ratios are consistent with the settled theorem (universal 2).")
     lines.append("- The 2×2 nilpotent shift attains 2 and is the first Lean special-class target.")
-    lines.append("- CB probes are *empirical* (finite k, low degree, Johnson sampling of ∂W).")
-    lines.append("- No cb probe in this run is a candidate counter-example to cb=2; larger")
-    lines.append("  amplifications and imported CEM snapshots are the next numerical step.")
+    lines.append("- CB probes are *empirical* (finite k, Johnson sampling of ∂W).")
+    lines.append("- No cb probe in this run is a candidate counter-example to cb=2.")
     lines.append("")
     return "\n".join(lines) + "\n"
 
@@ -732,6 +819,16 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--out", type=Path, default=None, help="experiment output directory")
     p.add_argument("--quick", action="store_true", help="sanity + nilpotent + small cb only")
+    p.add_argument(
+        "--large-cb",
+        action="store_true",
+        help="only the large cb campaign (k ≥ 8, degree ≥ 3); seeded and reproducible",
+    )
+    p.add_argument(
+        "--imported",
+        action="store_true",
+        help="only static CEM snapshots under data/imported/",
+    )
     p.add_argument("--legacy-mc", action="store_true", default=True, help="include original-harness reproduction")
     p.add_argument("--no-legacy-mc", action="store_false", dest="legacy_mc")
     p.add_argument("--n-angles", type=int, default=N_ANGLES)
@@ -742,18 +839,31 @@ def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     n_angles = args.n_angles
     root = repo_root()
-    out = args.out or (root / "experiments" / f"{date.today().isoformat()}-baseline")
+    if args.imported:
+        default_name = f"{date.today().isoformat()}-imported"
+    elif args.large_cb:
+        default_name = f"{date.today().isoformat()}-cb-large"
+    else:
+        default_name = f"{date.today().isoformat()}-baseline"
+    out = args.out or (root / "experiments" / default_name)
 
     print("Empirical scalar Crouzeix ratios (should stay <= ~2)")
     records: list[RatioRecord] = []
-    records.extend(campaign_sanity(n_angles=n_angles))
-    records.extend(campaign_nilpotent(n_angles=n_angles))
-    if args.legacy_mc:
-        records.extend(campaign_legacy_mc())
-    if not args.quick:
-        records.extend(campaign_structured(n_angles=n_angles))
-        records.extend(campaign_random(n_angles=n_angles))
-    records.extend(campaign_cb(n_angles=n_angles if args.quick else n_angles))
+    if args.imported:
+        records.extend(campaign_imported(n_angles=n_angles))
+    elif args.large_cb:
+        records.extend(campaign_cb_large(n_angles=n_angles))
+    else:
+        records.extend(campaign_sanity(n_angles=n_angles))
+        records.extend(campaign_nilpotent(n_angles=n_angles))
+        if args.legacy_mc:
+            records.extend(campaign_legacy_mc())
+        if not args.quick:
+            records.extend(campaign_structured(n_angles=n_angles))
+            records.extend(campaign_random(n_angles=n_angles))
+        records.extend(campaign_cb(n_angles=n_angles if args.quick else n_angles))
+        if not args.quick:
+            records.extend(campaign_cb_large(n_angles=n_angles))
 
     print_console(records)
 

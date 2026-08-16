@@ -10,11 +10,12 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from ensembles import nilpotent_shift
+from ensembles import list_imported, load_imported_matrix, nilpotent_shift
 from ratio_harness import (
     THEORY_W_NILPOTENT,
     cb_crouzeix_ratio,
     numerical_radius,
+    random_matrix_poly,
     scalar_crouzeix_ratio,
 )
 
@@ -51,6 +52,37 @@ def main() -> int:
 
     # S^2 = 0
     ok &= check("2x2 S^2=0", np.linalg.norm(S2 @ S2) < 1e-15)
+
+    # Shipped cb path: k ≥ 8, degree ≥ 3, seeded. Must be finite and ≤ 2 + 1e-3.
+    S5 = nilpotent_shift(5)
+    mats_large = random_matrix_poly(k=8, degree=3, seed=20260816)
+    r_large = cb_crouzeix_ratio(S5, mats_large, n_angles=180)
+    ok &= check("large cb k=8 deg=3 finite", np.isfinite(r_large), f"ratio={r_large}")
+    ok &= check("large cb k=8 deg=3 ≤ 2+1e-3", np.isfinite(r_large) and r_large <= 2.0 + 1e-3, f"ratio={r_large}")
+    ok &= check("large cb coeff count", len(mats_large) == 4 and mats_large[0].shape == (8, 8))
+
+    tq = list_imported("torquon-gb")
+    hy = list_imported("hygra")
+    ok &= check("torquon-gb snapshots present", len(tq) >= 3, f"count={len(tq)}")
+    ok &= check("hygra snapshots present", len(hy) >= 3, f"count={len(hy)}")
+    if tq:
+        Aimp = load_imported_matrix("torquon-gb", "q4-element-k.json")
+        ok &= check("imported q4 is 8x8", Aimp.shape == (8, 8))
+        r_imp = scalar_crouzeix_ratio(Aimp, [0.0, 1.0], n_angles=180)
+        ok &= check(
+            "imported q4 scalar ratio finite ≤ 2+1e-3",
+            np.isfinite(r_imp) and r_imp <= 2.0 + 1e-3,
+            f"ratio={r_imp}",
+        )
+    if hy:
+        J = load_imported_matrix("hygra", "flower-hvacd-jacobian.json")
+        ok &= check("hygra flower jacobian 2x2", J.shape == (2, 2))
+        r_j = scalar_crouzeix_ratio(J, [0.0, 1.0], n_angles=180)
+        ok &= check(
+            "hygra flower jacobian ratio finite ≤ 2+1e-3",
+            np.isfinite(r_j) and r_j <= 2.0 + 1e-3,
+            f"ratio={r_j}",
+        )
 
     print("all passed" if ok else "SOME CHECKS FAILED")
     return 0 if ok else 1

@@ -16,9 +16,13 @@ and regenerates `../data/synthetic/manifest.json`.
 
 Useful flags:
 - `--quick` — sanity, nilpotent family, and a small cb probe only
+- `--large-cb` — only the large cb campaign (`k ≥ 8`, `degree ≥ 3`); seeded
+- `--imported` — only static CEM snapshots under `../data/imported/`
 - `--no-legacy-mc` — skip reproduction of the original Monte-Carlo sampler
 - `--n-angles N` — Johnson supporting-line resolution (default 720)
 - `--out DIR` — override the experiment directory
+
+The default (non-`--quick`) run also includes the large cb campaign.
 
 ## What is computed
 - **Scalar ratio** `||p(A)|| / max_{W(A)} |p|` for a polynomial `p`.
