@@ -11,6 +11,11 @@ The constant 2 is sharp. Independent proofs: Jin (July 2026) and Lorist–Schwen
 
 The completely-bounded (cb) version with the same constant and multi-operator / joint spectral-set extensions remain **open**.
 
+First-session log (2026-08-16): Johnson numerical scout in
+`experiments/2026-08-16-baseline/` (max observed scalar and cb-probe
+ratios = 2.0000) and the first Lean lemmas in `lean/NilpotentShift.lean`.
+See `docs/notes/2026-08-16-first-session.md`.
+
 ## Isolation rules
 - This repository is independent of the AppSprout CEM repositories (Torquon-GB, Phenara, Unsga3, CannaSage, etc.).
 - Agents here may **read** public or explicitly shared operator logs, numerical-range samples, and matrix ensembles from the CEM repositories.

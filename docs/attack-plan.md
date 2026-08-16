@@ -34,3 +34,19 @@ Begin with commuting or nearly-commuting tuples (common in multi-physics setting
 
 ## Feedback to CEMs
 Any partial result (cb constant for a concrete class, or a joint bound under a commutator-size hypothesis) is documented here and may be cited by CEM agents. No automatic dependency is created.
+
+## Progress log
+
+### 2026-08-16
+- Numerical harness now uses Johnson’s supporting-line estimate of `W(A)`.
+  The original Monte-Carlo n=8 ratio ~6.5 was an underestimate of
+  `max |p|` and is not a Crouzeix violation.
+- First scout (`experiments/2026-08-16-baseline/`): 242 scalar Johnson
+  ratios, max 2.0000; 17 cb probes, max 2.0000. No record above
+  `2 + 10^{-3}`.
+- Special-class clarification: unweighted Jordan nilpotents have *disk*
+  numerical range, so cb=2 is classical (Okubo–Ando / Berger). Lean has
+  the n=2 scalar sharpness (`lean/NilpotentShift.lean`). The first
+  genuinely open special classes are **perturbed nilpotents** and
+  **weighted shifts**.
+- Imported-data layout ready; no live CEM pull.

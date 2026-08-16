@@ -12,3 +12,18 @@
 
 4. **Extremal examples for the cb ratio**  
    Systematic search for matrices (or amplifications) that force the ratio close to the best possible constant.
+
+## Status notes (2026-08-16)
+
+- Unweighted nilpotent Jordan blocks are *not* an open cb class: `W(S_n)`
+  is a disk of radius `cos(π/(n+1))`, and a disk is a complete 2-spectral
+  set. The n=2 scalar sharpness `‖S‖/w(S) = 2` is formalized in
+  `lean/NilpotentShift.lean`. The remaining Lean work for this family is
+  the disk theorem itself.
+- First open special classes in this repository:
+  1. controlled perturbations `S_n + εE` (W not a disk);
+  2. weighted shifts;
+  3. general 3×3 nilpotents that are not a single Jordan block.
+- Empirical cb probes on random low-degree amplifications have not yet
+  produced a ratio near 2 except for the trivial amplification
+  `F(z) = z I_k` on `S_2`. Larger `k` is the next numerical search.

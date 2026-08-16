@@ -9,9 +9,10 @@ The first concrete data import will be a small set of **synthetic but CEM-motiva
 2. Hygra — multi-zone environmental or resource Jacobians (nearly-commuting families preferred for early joint tests).
 
 ## Immediate action
-- Generate synthetic nilpotent-shift and random-triangular ensembles in `data/synthetic/` (already supported by the numerical harness).
-- Request or produce 3–5 small matrices from Torquon-GB test benches (dimension ≤ 32 preferred) and place them under `data/imported/torquon-gb/` with a short README (origin, date, any anonymization).
-- Same for Hygra under `data/imported/hygra/` when convenient.
+- Generate synthetic nilpotent-shift and random-triangular ensembles in `data/synthetic/` (already supported by the numerical harness). **Done, 2026-08-16:** see `data/synthetic/manifest.json`.
+- Request or produce 3–5 small matrices from Torquon-GB test benches (dimension ≤ 32 preferred) and place them under `data/imported/torquon-gb/` with a short README (origin, date, any anonymization). **Layout ready; no live pull.**
+- Same for Hygra under `data/imported/hygra/` when convenient. **Layout ready; no live pull.**
+- File format: `data/imported/SCHEMA.md`.
 
 No live coupling. Static snapshots only.
 
