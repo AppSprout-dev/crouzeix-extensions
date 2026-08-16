@@ -1,0 +1,43 @@
+{
+  "id": "hygra/envelope-dqdt-3room",
+  "cem": "hygra",
+  "kind": "jacobian",
+  "n": 3,
+  "dtype": "complex128",
+  "real": [
+    [
+      -101.52062752648943,
+      -0.0,
+      -0.0
+    ],
+    [
+      -0.0,
+      -36.002414613360294,
+      -0.0
+    ],
+    [
+      -0.0,
+      -0.0,
+      -30.977372584614812
+    ]
+  ],
+  "imag": [
+    [
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "units": "W/K",
+  "notes": "\u2202Q_env/\u2202T_in for flower/veg/dry from Hygra@9e71ce9 EnvelopeTakeoffModel on examples/operator-intake.synthetic.json (UsCustomary areas \u2192 m\u00b2). Sealed IMP-100 + slab-epoxy + infiltration. Rooms are thermally independent at first order (diagonal). Anonymized: synthetic demo grow, not a real site."
+}

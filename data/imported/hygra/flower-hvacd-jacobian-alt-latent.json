@@ -1,0 +1,29 @@
+{
+  "id": "hygra/flower-hvacd-jacobian-alt-latent",
+  "cem": "hygra",
+  "kind": "jacobian",
+  "n": 2,
+  "dtype": "complex128",
+  "real": [
+    [
+      -101.52062752648943,
+      0.55
+    ],
+    [
+      0.0,
+      0.45
+    ]
+  ],
+  "imag": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ]
+  ],
+  "units": "W/K and W/W; rows (qNetSens, qLatAlt), cols (T_in, P_light)",
+  "notes": "Alternate lighting-power latent fraction (PhysicsConstants.LightingToLatentFraction Flower=0.45), Hygra@9e71ce9."
+}

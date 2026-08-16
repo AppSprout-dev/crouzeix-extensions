@@ -1,0 +1,29 @@
+{
+  "id": "hygra/veg-hvacd-jacobian",
+  "cem": "hygra",
+  "kind": "jacobian",
+  "n": 2,
+  "dtype": "complex128",
+  "real": [
+    [
+      -36.002414613360294,
+      1.0
+    ],
+    [
+      0.0,
+      0.0
+    ]
+  ],
+  "imag": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ]
+  ],
+  "units": "W/K and W/W; rows (qNetSens, qLatPrimary), cols (T_in, P_light)",
+  "notes": "Same operator family as flower-hvacd-jacobian on veg-01 (Hygra@9e71ce9). Nearly-commuting pair for joint tests."
+}

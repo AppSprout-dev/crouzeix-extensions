@@ -1,0 +1,29 @@
+{
+  "id": "hygra/flower-hvacd-jacobian",
+  "cem": "hygra",
+  "kind": "jacobian",
+  "n": 2,
+  "dtype": "complex128",
+  "real": [
+    [
+      -101.52062752648943,
+      1.0
+    ],
+    [
+      0.0,
+      0.0
+    ]
+  ],
+  "imag": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ]
+  ],
+  "units": "W/K and W/W; rows (qNetSens, qLatPrimary), cols (T_in, P_light)",
+  "notes": "RoomHvacdLoadModel + LatentEtProxyModel primary ET path (Hygra@9e71ce9) on flower-01 at DefaultPeak (T_out=35 \u00b0C, \u03b1=1). Non-normal: temperature hits sensible only; ET latent is T-independent."
+}

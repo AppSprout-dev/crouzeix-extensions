@@ -1,0 +1,11 @@
+{
+  "cem": "hygra",
+  "exported": "2026-08-16",
+  "source_sha": "9e71ce9",
+  "matrices": [
+    "envelope-dqdt-3room.json",
+    "flower-hvacd-jacobian.json",
+    "veg-hvacd-jacobian.json",
+    "flower-hvacd-jacobian-alt-latent.json"
+  ]
+}

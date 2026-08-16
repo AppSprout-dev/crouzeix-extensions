@@ -1,0 +1,11 @@
+{
+  "cem": "torquon-gb",
+  "exported": "2026-08-16",
+  "source_sha": "2be4790",
+  "matrices": [
+    "q4-element-k.json",
+    "mbb-2x2-free-stiffness.json",
+    "endplate-3x2-corner-grounded.json",
+    "vdi-flange-axial-spring.json"
+  ]
+}

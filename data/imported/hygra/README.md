@@ -1,18 +1,27 @@
 # Imported snapshots — Hygra
 
-**Status:** layout only. No matrices yet.
+**Status:** first static export, 2026-08-16.
 
-## Expected contents
-3–5 small multi-zone environmental or resource Jacobians, dimension ≤ 32.
-Nearly-commuting families are preferred (early joint-spectral-set tests).
+## Origin
+- Source repository: local `hygra` (read-only).
+- Commit: `9e71ce9`.
+- Intake: `examples/operator-intake.synthetic.json` (already labelled “not a real site”).
+- Exporter: `numerical/export_cem_snapshots.py`.
 
-## When a snapshot arrives
-1. Follow `../SCHEMA.md`.
-2. Record origin, date, and any anonymization in this README.
-3. Do **not** pull live from the Hygra repository and do **not**
-   open PRs or issues there. Static files only.
+## Matrices
+See `manifest.json`. Four Jacobians, n ≤ 3:
 
-## Why this family
-Multi-zone Jacobians are the realistic nearly-commuting tuples for the
-joint numerical-range campaign. Scalar Crouzeix already applies
-operator-by-operator; a joint bound is the CEM-facing goal.
+| file | kind | n | what |
+|------|------|---|------|
+| `envelope-dqdt-3room.json` | jacobian | 3 | ∂Q_env/∂T_in for flower / veg / dry |
+| `flower-hvacd-jacobian.json` | jacobian | 2 | (qNetSens, qLat) vs (T_in, P_light), primary ET |
+| `veg-hvacd-jacobian.json` | jacobian | 2 | same family on veg-01 (nearly-commuting pair) |
+| `flower-hvacd-jacobian-alt-latent.json` | jacobian | 2 | alternate lighting-power latent fraction |
+
+## Anonymization
+Synthetic demo rooms only (`flower-01`, `veg-01`, `dry-01`). No facility name, address, or customer identifiers.
+
+## How to regenerate
+```bash
+python numerical/export_cem_snapshots.py
+```

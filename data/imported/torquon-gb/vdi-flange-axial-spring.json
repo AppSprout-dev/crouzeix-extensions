@@ -1,0 +1,29 @@
+{
+  "id": "torquon-gb/vdi-flange-axial-spring",
+  "cem": "torquon-gb",
+  "kind": "stiffness",
+  "n": 2,
+  "dtype": "complex128",
+  "real": [
+    [
+      1538461.5384615385,
+      -1538461.5384615385
+    ],
+    [
+      -1538461.5384615385,
+      1538461.5384615385
+    ]
+  ],
+  "imag": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ]
+  ],
+  "units": "N/mm",
+  "notes": "BodyStiffness.FlangeGapMicron k=E\u00b7A/L with IntegratedSpec.Default flange 10\u00d75 mm, two long-side runs, L=plate+flange=13 mm, E=200 GPa (Torquon-GB@2be4790). Singular rigid-body pair \u2014 the CEM spring."
+}

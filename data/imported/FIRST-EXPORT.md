@@ -10,9 +10,10 @@ The first concrete data import will be a small set of **synthetic but CEM-motiva
 
 ## Immediate action
 - Generate synthetic nilpotent-shift and random-triangular ensembles in `data/synthetic/` (already supported by the numerical harness). **Done, 2026-08-16:** see `data/synthetic/manifest.json`.
-- Request or produce 3–5 small matrices from Torquon-GB test benches (dimension ≤ 32 preferred) and place them under `data/imported/torquon-gb/` with a short README (origin, date, any anonymization). **Layout ready; no live pull.**
-- Same for Hygra under `data/imported/hygra/` when convenient. **Layout ready; no live pull.**
+- Request or produce 3–5 small matrices from Torquon-GB test benches (dimension ≤ 32 preferred) and place them under `data/imported/torquon-gb/` with a short README (origin, date, any anonymization). **Done, 2026-08-16:** four stiffness operators from Torquon-GB@`2be4790` (Q4 element, MBB 2×2, end-plate 3×2, VDI flange). See `torquon-gb/README.md`.
+- Same for Hygra under `data/imported/hygra/` when convenient. **Done, 2026-08-16:** four Jacobians from Hygra@`9e71ce9` on the published synthetic operator intake. See `hygra/README.md`.
 - File format: `data/imported/SCHEMA.md`.
+- Regenerator: `python numerical/export_cem_snapshots.py` (writes only into this repository).
 
 No live coupling. Static snapshots only.
 
