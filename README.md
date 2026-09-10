@@ -16,6 +16,9 @@ First-session log (2026-08-16): Johnson numerical scout in
 ratios = 2.0000) and the first Lean lemmas in `lean/NilpotentShift.lean`.
 See `docs/notes/2026-08-16-first-session.md`.
 
+Stage gates (do not skip floors) are in [`docs/ATTACK_LADDER.md`](docs/ATTACK_LADDER.md):
+numerical scout and Lean toys exist; cb constant 2 and joint spectral-set extensions remain open.
+
 ## Isolation rules
 - This repository is independent of the AppSprout CEM repositories (Torquon-GB, Phenara, Unsga3, CannaSage, etc.).
 - Agents here may **read** public or explicitly shared operator logs, numerical-range samples, and matrix ensembles from the CEM repositories.
@@ -34,7 +37,7 @@ See `docs/notes/2026-08-16-first-session.md`.
 Settled scalar bounds (constant 2) can already be used inside CEM evaluation pipelines for residual control, matrix-function error estimates, and adaptive tolerances. Any progress on the cb or joint versions will strengthen multi-physics evaluation layers.
 
 ## Repository layout
-- `docs/` — attack plan, open problems, CEM relevance notes
+- `docs/` — attack ladder, attack plan, open problems, CEM relevance notes
 - `lean/` — Lean 4 formalization (mathlib)
 - `numerical/` — Python / Julia scouting scripts
 - `data/` — imported CEM snapshots + synthetic test matrices
